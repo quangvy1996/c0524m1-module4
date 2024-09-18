@@ -8,7 +8,7 @@
 <h1>Từ điển Anh-Việt</h1>
 <form action="translate" method="post">
   <label for="words">Nhập từ</label>
-  <input type="text" id="words" name="words">
+  <input type="text" id="words" name="words" value="${enteredWord}">
   <button type="submit">Dịch</button>
 </form>
 <h3>Kết quả</h3>
