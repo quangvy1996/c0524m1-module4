@@ -1,4 +1,4 @@
-package com.example.hom_thu_dien_tu.Repository;
+package com.example.hom_thu_dien_tu.repository;
 
 import com.example.hom_thu_dien_tu.model.Settings;
 import org.springframework.stereotype.Repository;
