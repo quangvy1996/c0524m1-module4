@@ -25,13 +25,17 @@ public class ProductRepository implements IProductRepository {
 
     @Override
     public Product findById(int id) {
-        TypedQuery<Product> query = entityManager.createQuery("select p from Product p where p.id=:id", Product.class);
-        query.setParameter("id", id);
-        try {
-            return query.getSingleResult();
-        } catch (NoResultException e) {
+//        TypedQuery<Product> query = entityManager.createQuery("select p from Product p where p.id=:id", Product.class);
+//        query.setParameter("id", id);
+//        try {
+//            return query.getSingleResult();
+//        } catch (NoResultException e) {
+//            return null;
+//        }
+        if (id == 0){
             return null;
         }
+        return entityManager.find(Product.class, id);
     }
 
     @Override

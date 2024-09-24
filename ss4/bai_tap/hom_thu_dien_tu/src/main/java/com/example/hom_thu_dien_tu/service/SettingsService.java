@@ -5,7 +5,7 @@ import com.example.hom_thu_dien_tu.repository.SettingsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+
 import java.util.List;
 
 @Service
