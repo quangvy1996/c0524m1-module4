@@ -2,24 +2,43 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Create New Post</title>
+    <!-- Thêm Bootstrap từ CDN -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h1>Create New Post</h1>
-<form action="#" th:action="@{/blog/new}" th:object="${blog}" method="post">
-    <div>
-        <label for="title">Title:</label>
-        <input type="text" id="title" th:field="*{title}" required />
-    </div>
-    <div>
-        <label for="content">Content:</label>
-        <textarea id="content" th:field="*{content}" required></textarea>
-    </div>
-    <div>
-        <button type="submit">Save</button>
-    </div>
-</form>
-<div>
-    <a href="/blog">Back to list</a>
+<div class="container mt-4">
+    <h1 class="mb-4">Create New Post</h1>
+
+    <!-- Form tạo bài viết mới -->
+    <form action="#" th:action="@{/blog/new}" th:object="${blog}" method="post">
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" class="form-control" th:field="*{title}" required />
+        </div>
+
+        <div class="form-group">
+            <label for="content">Content:</label>
+            <textarea id="content" class="form-control" rows="6" th:field="*{content}" required></textarea>
+        </div>
+        <div class="form-group">
+            <select th:field="*{category}">
+                <option th:each="category :${categories}"
+                        th:value="${category.id}"
+                        th:text="${category.name}">
+                </option>
+
+            </select>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="/blog" class="btn btn-secondary">Back to list</a>
+        </div>
+    </form>
 </div>
+
+<!-- Thêm Bootstrap JS và jQuery (tùy chọn, để hỗ trợ các tính năng tương tác) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

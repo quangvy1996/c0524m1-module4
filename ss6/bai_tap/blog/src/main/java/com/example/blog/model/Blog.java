@@ -1,9 +1,6 @@
 package com.example.blog.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Blog {
@@ -11,13 +8,19 @@ public class Blog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+    @Column(columnDefinition = "LONGTEXT")
     private String content;
+    private String summary;
+
+    @ManyToOne
+    private Category category;
 
 
-    public Blog(Long id, String title, String content) {
+    public Blog(Long id, String title, String content, String summary) {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.summary = summary;
 
     }
     public Blog() {}
@@ -46,5 +49,19 @@ public class Blog {
         this.content = content;
     }
 
+    public String getSummary() {
+        return summary;
+    }
 
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }
