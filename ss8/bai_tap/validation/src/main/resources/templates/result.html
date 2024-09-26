@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registration Successful</title>
+</head>
+<body>
+<h2>Registration Successful!</h2>
+<p>User details:</p>
+<div th:if="${mess != null}" style="color: green;">
+    <p th:text="${mess}"></p>
+</div>
+<ul th:each="user : ${users}">
+    <li>Name: <span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></li>
+    <li>Phone: <span th:text="${user.phoneNumber}"></span></li>
+    <li>Age: <span th:text="${user.age}"></span></li>
+    <li>Email: <span th:text="${user.email}"></span></li>
+</ul>
+</body>
+</html>
