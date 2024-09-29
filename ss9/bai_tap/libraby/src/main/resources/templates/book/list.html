@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Library Books</title>
+</head>
+<body>
+<h1>Available Books</h1>
+<ul>
+    <li th:each="book : ${books}">
+        <span th:text="${book.title}">Title</span> -
+        <span th:text="${book.quantity}">Quantity</span>
+        <a th:href="@{/books/borrow/{title}(title=${book.title})}">Borrow</a>
+    </li>
+</ul>
+</body>
+</html>

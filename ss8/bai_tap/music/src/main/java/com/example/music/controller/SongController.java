@@ -24,14 +24,16 @@ public class SongController {
 
     @GetMapping("/")
     public String showList(Model model) {
-        model.addAttribute("songs",songService.findAll());
+        model.addAttribute("songs", songService.findAll());
         return "list";
     }
+
     @GetMapping("/create")
     public String createForm(Model model) {
-        model.addAttribute("song",new Song());
+        model.addAttribute("song", new Song());
         return "create";
     }
+
     @PostMapping("/create")
     public String create(@Valid @ModelAttribute("song") SongDto songDto, BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
@@ -45,30 +47,28 @@ public class SongController {
         redirectAttributes.addFlashAttribute("mess", "add success");
         return "redirect:/";
     }
+
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable("id") Long id, Model model) {
         Song song = songService.findById(id);
         model.addAttribute("song", song);
         return "edit";
     }
+
     @PostMapping("/edit/{id}")
     public String editSong(@Valid @ModelAttribute("song") SongDto songDto, BindingResult bindingResult,
-                           RedirectAttributes redirectAttributes,@PathVariable("id") Long id) {
+                           RedirectAttributes redirectAttributes, @PathVariable("id") Long id) {
         new SongDto().validate(songDto, bindingResult);
         if (bindingResult.hasErrors()) {
             return "edit";
         }
         Song existingSong = songService.findById(id);
-        if (existingSong != null) {
-            BeanUtils.copyProperties(songDto, existingSong);
-            songService.save(existingSong);
-            redirectAttributes.addFlashAttribute("mess", "Update success");
-            return "redirect:/";
-        } else {
-            redirectAttributes.addFlashAttribute("error", "Song not found");
-            return "redirect:/";
-        }
+        BeanUtils.copyProperties(songDto, existingSong);
+        songService.save(existingSong);
+        redirectAttributes.addFlashAttribute("mess", "Update success");
+        return "redirect:/";
     }
+
     @GetMapping("/delete/{id}")
     public String deleteSong(@PathVariable("id") Long id) {
         songService.deleteById(id);
