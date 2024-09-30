@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Thanh toán thành công</h1>
+    <p>Cảm ơn bạn đã mua hàng!</p>
+    <p>Hóa đơn được xử lý thành công.</p>
+    <p>
+        <strong>Total Amount Paid:</strong> <span th:text="${cart.countTotalPayment()}"></span>
+    </p>
+    <a class="btn btn-primary" href="/shop">Continue Shopping</a>
+    <a class="btn btn-secondary" href="/shopping-cart">View Cart</a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

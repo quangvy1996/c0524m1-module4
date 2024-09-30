@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Danh sách sản phẩm</h1>
+    <p>
+        <a class="btn btn-primary" href="/shopping-cart">Giỏ hàng</a>
+    </p>
+    <table class="table table-bordered">
+        <thead class="thead-light">
+        <tr>
+            <th>Hinh ảnh</th>
+            <th>Tên sản phẩm</th>
+            <th>Giá</th>
+            <th>Thêm vào giỏ hàng</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="product : ${products}">
+            <tr>
+                <td>
+                    <img th:src="@{${product.image}}"
+                    alt="Product Image" class="img-thumbnail" style="width: 100px; height: auto;">
+                </td>
+                <td>
+                    <a th:href="@{/detail/__${product.id}__}" th:text="${product.name}"></a>
+                </td>
+                <td th:text="${product.price}"></td>
+                <td>
+                    <a class="btn btn-success" th:href="@{/add/__${product.id}__(action='list')}">Thêm hàng</a>
+                </td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+</div>
+
+<!-- Bootstrap JS and dependencies (Optional) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

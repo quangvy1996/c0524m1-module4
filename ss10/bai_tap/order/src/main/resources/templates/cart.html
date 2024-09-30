@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <p>
+        <a class="btn btn-secondary" href="/shop">Cửa hàng</a>
+    </p>
+    <h1>Your Cart</h1>
+    <form th:action="@{/shop}" th:object="${cart}" method="post">
+        <h3>Total Items: <span th:text="${cart.countItemQuantity()}"></span></h3>
+        <h3>Total Products: <span th:text="${cart.countProductQuantity()}"></span></h3>
+        <table class="table table-bordered mt-4">
+            <thead class="thead-light">
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${cart.products}">
+                <td th:text="${product.getKey().name}"></td>
+                <td>
+                    <a class="btn btn-sm btn-danger" id="decrease_button" th:href="@{/remove/__${product.getKey().id}__}" th:text="${'-'}"></a>
+                    <span th:text="${product.getValue()}"></span>
+                    <a class="btn btn-sm btn-success" id="increase_button" th:href="@{/add/__${product.getKey().id}__(action='show')}" th:text="${'+'}"></a>
+                </td>
+                <td th:text="${product.getKey().price}"></td>
+                <td style="text-align: center"><a class="btn btn-sm btn-danger" id="delete_button" th:href="@{/delete/__${product.getKey().id}__}">Xóa</a></td>
+            </tr>
+            <tr>
+                <td>Total</td>
+                <td></td>
+                <td th:text="${cart.countTotalPayment()}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <a class="btn btn-primary" th:href="@{/checkout}">Thanh toán</a>
+    </form>
+</div>
+
+<!-- Bootstrap JS and dependencies (Optional) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
