@@ -75,10 +75,8 @@ public class Cart {
             Integer currentQuantity = itemEntry.getValue();
 
             if (currentQuantity > 1) {
-                // Giảm số lượng nếu lớn hơn 1
                 products.replace(itemEntry.getKey(), currentQuantity - 1);
             } else {
-                // Nếu số lượng bằng 1 thì xóa sản phẩm
                 products.remove(product);
             }
         }
