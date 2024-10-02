@@ -13,12 +13,12 @@ import java.util.List;
 public class BlogService implements IBlogService {
 
     @Autowired
-private IBlogRepository blogRepository;
+    private IBlogRepository blogRepository;
 
 
     @Override
-    public List<Blog> findAll() {
-       return blogRepository.findAll();
+    public Page<Blog> findAll(Pageable pageable) {
+        return blogRepository.findAll(pageable);
     }
 
     @Override
@@ -38,7 +38,10 @@ private IBlogRepository blogRepository;
 
     @Override
     public Page<Blog> findBlogByTitleContaining(String title, Pageable pageable) {
-        return blogRepository.findBlogByTitleContaining(title, pageable);
+        if (title == null || title.isEmpty()) {
+            title = "";
+        }
+        String content = "%" + title + "%";
+        return blogRepository.findBlogByTitleContaining(content, pageable);
     }
-
 }

@@ -3,44 +3,83 @@
 <head>
     <title>Blog</title>
     <!-- Thêm Bootstrap từ CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container mt-4">
     <h2 class="mb-4">All Blogs</h2>
     <a href="/blog/create" class="btn btn-primary mb-3">Create New Post</a>
-
-    <form class="form-inline mb-4" action="/blog" method="get">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search by title" aria-label="Search" name="searchTitle">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-
-    <div class="row">
-        <div class="col-md-4 mb-4" th:each="blog : ${blogPage}">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${blog.title}">Blog Title</h5>
-                    <p class="card-text" th:text="${blog.summary}">Blog Summary</p>
-                    <h6 class="card-title" th:text="${blog.category.name}">Category</h6>
-                </div>
-                <div class="card-footer">
-                    <a th:href="@{/blog/{id}(id=${blog.id})}" class="btn btn-primary btn-sm">View</a>
-                    <a th:href="@{/blog/edit/{id}(id=${blog.id})}" class="btn btn-warning btn-sm">Edit</a>
-                    <a th:href="@{/blog/delete/{id}(id=${blog.id})}" class="btn btn-danger btn-sm">Delete</a>
-                </div>
-            </div>
-        </div>
+        <input class="form-control mr-sm-2" type="search" placeholder="Search by title" aria-label="Search"
+               name="searchTitle" id="keyword">
+        <p class="btn btn-outline-success my-2 my-sm-0" type="submit" id="search">Search</p>
+    <div class="row" id="card-body">
     </div>
-
-    <div class="d-flex justify-content-between mt-4">
-        <a class="btn btn-secondary" th:if="${blogPage.hasPrevious()}" th:href="@{/blog(page=${blogPage.number -1},searchTitle=${searchTitle})}">Previous</a>
-        <span>Page <span th:text="${blogPage.number +1}"></span> of <span th:text="${blogPage.totalPages}"></span></span>
-        <a class="btn btn-secondary" th:if="${blogPage.hasNext()}" th:href="@{/blog(page=${blogPage.number +1},searchTitle=${searchTitle})}">Next</a>
+    <div id="pagination">
+        <button id="load-more" class="btn btn-primary">Tải thêm</button>
     </div>
 </div>
+<script>
+    let currentPage = 0;
+    let currentKeyword = "";
+    $(function () {
 
+        loadBlogs(currentPage);
+        $("#load-more").click(function () {
+            currentPage++;
+            loadBlogs(currentPage, currentKeyword);
+        });
+        $("#search").click(function () {
+            currentKeyword = $("#keyword").val();
+            loadBlogs(currentPage, currentKeyword);
+        })
+    });
+
+    function loadBlogs(page,currentKeyword) {
+        $.ajax({
+            contentType: "application/json",
+            method: "GET",
+            url: "http://localhost:8080/v1/api/blogs/search",
+            data: {page: page, keyword: currentKeyword},
+            success: function (data) {
+                console.log(data);
+                let content = "";
+                for (let i = 0; i < data.content.length; i++) {
+                    content += "<div class=\"col-md-4 mb-4\">\n" +
+                        "            <div class=\"card h-100\">\n" +
+                        "                <div class=\"card-body\">\n" +
+                        "                    <p>" + data.content[i].title + "</p>\n" +
+                        "                    <p>\n" +
+                        "                        " + data.content[i].content.substring(0, 100) + '...' + "\n" +
+                        "                    </p>\n" +
+                        "                    <p>" + data.content[i].category.name + "</p>\n" +
+                        "                </div>\n" +
+                        "                <div class=\"card-footer\">\n" +
+                        "                    <a href=\"/blog/" + data.content[i].id + "\" class=\"btn btn-primary btn-sm\">View</a>\n" +
+                        "                    <a href=\"/blog/edit/" + data.content[i].id + "\" class=\"btn btn-warning btn-sm\">Edit</a>\n" +
+                        "                    <a href=\"/blog/delete/" + data.content[i].id + "\" class=\"btn btn-danger btn-sm\">Delete</a>\n" +
+                        "                </div>\n" +
+                        "            </div>\n" +
+                        "        </div>";
+                }
+                if (page === 0) {
+                    $("#card-body").html(content);  // Xóa nội dung cũ và hiển thị nội dung mới
+                } else {
+                    $("#card-body").append(content);  // Thêm vào nội dung hiện tại
+                }
+                if (page >= data.totalPages - 1) {
+                    $("#load-more").hide();  // Ẩn nút nếu không còn trang nào để tải
+                } else {
+                    $("#load-more").show();  // Hiển thị nút "Tải thêm" nếu còn trang
+                }
+            },
+            error: function (error) {
+                console.log("error: " + error);
+            }
+        });
+    }
+</script>
 <!-- Thêm Bootstrap JS và jQuery (tùy chọn) -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

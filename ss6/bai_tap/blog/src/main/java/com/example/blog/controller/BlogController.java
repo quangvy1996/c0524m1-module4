@@ -28,6 +28,7 @@ public class BlogController {
 public List<Category> getCategories() {
     return iCategoryService.getAllCategories();
 }
+
     @GetMapping("")
     public String showList(@RequestParam(defaultValue = "0") int page,
                            @RequestParam(defaultValue = "") String searchTitle,
