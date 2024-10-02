@@ -22,15 +22,15 @@
 <script>
     let currentPage = 0;
     let currentKeyword = "";
-    $(function () {
 
-        loadBlogs(currentPage);
+    $(function () {
         $("#load-more").click(function () {
             currentPage++;
             loadBlogs(currentPage, currentKeyword);
         });
         $("#search").click(function () {
             currentKeyword = $("#keyword").val();
+            currentPage = 0;
             loadBlogs(currentPage, currentKeyword);
         })
     });
