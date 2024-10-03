@@ -10,9 +10,9 @@
 <div class="container mt-4">
     <h2 class="mb-4">All Blogs</h2>
     <a href="/blog/create" class="btn btn-primary mb-3">Create New Post</a>
-        <input class="form-control mr-sm-2" type="search" placeholder="Search by title" aria-label="Search"
-               name="searchTitle" id="keyword">
-        <p class="btn btn-outline-success my-2 my-sm-0" type="submit" id="search">Search</p>
+    <input class="form-control mr-sm-2" type="search" placeholder="Search by title" aria-label="Search"
+           name="searchTitle" id="keyword">
+    <p class="btn btn-outline-success my-2 my-sm-0" type="submit" id="search">Search</p>
     <div class="row" id="card-body">
     </div>
     <div id="pagination">
@@ -35,7 +35,7 @@
         })
     });
 
-    function loadBlogs(page,currentKeyword) {
+    function loadBlogs(page, currentKeyword) {
         $.ajax({
             contentType: "application/json",
             method: "GET",
@@ -50,7 +50,7 @@
                         "                <div class=\"card-body\">\n" +
                         "                    <p>" + data.content[i].title + "</p>\n" +
                         "                    <p>\n" +
-                        "                        " + data.content[i].content.substring(0, 100) + '...' + "\n" +
+                        "                        " + (data.content[i].content == null ? data.content[i].content.substring(0, 100) + "..." : "") + "\n" +
                         "                    </p>\n" +
                         "                    <p>" + data.content[i].category.name + "</p>\n" +
                         "                </div>\n" +

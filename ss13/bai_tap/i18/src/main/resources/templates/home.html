@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thymeleaf I18N Example</title>
+    <th:block th:insert="~{layout::library}"></th:block>
+</head>
+<body>
+<th:block th:insert="~{layout::navbar}"></th:block>
+<h1 th:text="#{greeting}">Default Greeting</h1>
+<p th:text="#{welcome}">Default Welcome Message</p>
+</body>
+</html>

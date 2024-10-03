@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<!--<html lang="en">-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thymeleaf I18N Example</title>
+    <th:block th:insert="~{layout::library}"></th:block>
+</head>
+<body>
+<th:block th:insert="~{layout::navbar}"></th:block>
+<h1 th:text="#{navbar.product.list}"></h1>
+<table class="table table-dark">
+    <tr>
+        <td th:text="#{title.id}"></td>
+        <td th:text="#{title.name}"></td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Laptop Dell</td>
+    </tr>
+</table>
+</body>
+</html>
